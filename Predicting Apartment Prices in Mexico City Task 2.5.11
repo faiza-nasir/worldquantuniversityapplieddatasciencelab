@@ -1,0 +1,36 @@
+Task 2.5.11: Use your model to generate a Series of predictions for X_test. When you submit your predictions to the grader, it will calculate the mean absolute error for your model.
+# Import necessary libraries
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor  # Example model
+from sklearn.metrics import mean_absolute_error
+
+# Step 1: Load the test features
+X_test = pd.read_csv("data/mexico-city-test-features.csv")
+
+# Display the structure and a quick overview of X_test
+print(X_test.info())
+X_test.head()
+
+# Step 2: Train your model (if not already trained)
+# Load your training data (this is just an example, adapt as needed)
+X_train = pd.read_csv("data/mexico-city-train-features.csv")
+y_train = pd.read_csv("data/mexico-city-train-target.csv")
+
+# Instantiate the model (RandomForestRegressor in this case, but use the model you're working with)
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train.values.ravel())  # Training the model
+
+# Step 3: Generate predictions for X_test
+y_pred = model.predict(X_test)
+
+# Convert predictions to a pandas Series (in case you need it in this format for submission)
+y_pred_series = pd.Series(y_pred, index=X_test.index)
+
+# Optional Step: Calculate Mean Absolute Error (only if you have y_test for validation)
+# Assuming you have the true target values for the test set
+# y_test = pd.read_csv("data/mexico-city-test-target.csv")  # if available
+# mae = mean_absolute_error(y_test, y_pred)
+# print(f"Mean Absolute Error (MAE): {mae}")
+
+# Return the predictions (can be submitted to the grader)
+y_pred_series
